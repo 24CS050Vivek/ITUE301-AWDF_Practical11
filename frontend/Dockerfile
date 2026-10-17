@@ -4,8 +4,8 @@
 # Multi-stage Dockerfile for React (Vite) Frontend
 # ==============================================================================
 
-# Stage 1: Build the React Application
-FROM node:18-alpine AS build
+# Stage 1: Build the React Application (Node 20+ required for Vite 8 / Rolldown)
+FROM node:20-alpine AS build
 
 WORKDIR /app
 
@@ -18,7 +18,7 @@ COPY . .
 RUN npm run build
 
 # Stage 2: Lightweight Production Runtime Stage (Supplementary Problem: Multi-stage build)
-FROM node:18-alpine AS production
+FROM node:20-alpine AS production
 
 WORKDIR /app
 

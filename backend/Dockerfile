@@ -2,7 +2,7 @@
 # Student: Aayush Malhotra (24CS051)
 # Node.js backend container definition
 
-FROM node:18-alpine
+FROM node:20-alpine
 
 # Set working directory inside container
 WORKDIR /app
