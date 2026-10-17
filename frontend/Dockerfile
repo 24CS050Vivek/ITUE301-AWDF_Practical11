@@ -9,22 +9,22 @@ FROM node:20-alpine AS build
 
 WORKDIR /app
 
-# Copy dependency manifests and install packages
+# Copy dependency manifests and install all build tools
 COPY package*.json ./
 RUN npm install
 
-# Copy application source code and build production bundle
+# Copy application source code and compile production bundle
 COPY . .
 RUN npm run build
 
-# Stage 2: Lightweight Production Runtime Stage (Supplementary Problem: Multi-stage build)
+# Stage 2: Production Runtime Stage (Supplementary Problem: Multi-stage build)
 FROM node:20-alpine AS production
 
 WORKDIR /app
 
-# Install minimal production preview runner
+# Install runtime dependencies including Vite preview runner
 COPY package*.json ./
-RUN npm install --omit=dev
+RUN npm install
 
 # Copy compiled dist from build stage
 COPY --from=build /app/dist ./dist
